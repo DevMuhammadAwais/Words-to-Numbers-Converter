@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+        <meta name="description" content="The Words to Number Converter streamlines the task of converting written words into numerical figures. It's invaluable for finance professionals needing to process written amounts, for data analysts enhancing clarity in numerical reporting, and for educators aiding comprehension of numeric concepts through written examples.">
+  <meta name="keywords" content="Words to Numbers Converter">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Words to Numbers Converter</title>
+    <style>
+        /* General styles */
+      .calculator-box__main {
+        background: #fff;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        border-radius: 0.6em;
+        padding: 2em;
+        box-sizing: border-box;
+        color: #000;
+      }
+
+      .calculator-box {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      
+      .input-words{
+          width: 42em;
+          border: solid 0.1px;
+          border-radius: 10px;
+          border-color: #C1C1C1;
+      }
+
+      .calculator-operation__right {
+        text-align: end;
+      }
+
+      .calculator-operation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .calculator-operation__left,
+      .calculator-operation__right {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .app-font.calculator-text.calculator-text--large {
+        font-size: 1.3em;
+        padding: 0 0.3em;
+        margin: 0;
+      }
+
+      .calculator-operation__right {
+        text-align: end;
+      }
+
+      .calculator-input {
+        display: flex;
+        align-items: center;
+        flex: 0 0 calc(33.33% - 10px); /* 33.33% width for each input field on larger screens */
+      }
+
+      .calculator-box__main input {
+        text-align: right;
+        background: #efeff5;
+        border: 0;
+        outline: 0;
+        border-radius: 0.4em;
+        font-size: 1.4em;
+        font-weight: 300;
+        padding: 0.6em;
+        width: 7em;
+        height: 2em;
+        -moz-appearance: textfield;
+      }
+
+      .calculator-button {
+          margin-right: 4em;
+        padding: 15px 10px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .calculator-button:hover {
+        background-color: #efeff5;
+        color: #000000;
+      }
+
+      .calculator-button:focus {
+        outline: none;
+        background-color: #000000;
+        color: #ffffff;
+      }
+
+        /* Added styles for new features and responsiveness */
+        .calculator-text--small {
+            font-size: 0.8em;
+        }
+
+        .calculator-text--extra-large {
+            font-size: 1.6em;
+        }
+
+        .calculator-input--checkbox {
+            margin-top: 5px;
+            margin-right: 10px;
+            width: 4.3em;
+        }
+        
+        #auto{
+            width: 6em;
+            height: 0.7em;
+        }
+        
+                #comma{
+                    
+             width: 6em;
+             height: 0.7em;
+        }
+
+        .calculator-textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 5px;
+            resize: none;
+        }
+
+        /* Media query for responsiveness */
+        @media (max-width: 768px) {
+            .calculator-input {
+                flex: 100%;
+                margin-top: 10px;
+                margin-right: 0;
+            }
+
+      .input-words{
+          width: 10em;
+          border: solid 0.1px;
+          border-radius: 10px;
+          border-color: #C1C1C1;
+      }
+            .input-number{
+              width: 30%;
+              margin-bottom: 4.5em;
+            }
+            
+            .calculator-button{
+                margin-right: 2.5em;
+            }
+
+            .calculator-operation__right {
+                flex-direction: column;
+                flex: 0 0 50%;
+            }
+
+            .calculator-input--checkbox {
+                margin-top: 10px;
+                margin-right: 0;
+            }
+
+            #letter-case{
+            width: 7.7em;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .calculator-input {
+                flex: 100%;
+                margin-top: 10px;
+                margin-right: 0;
+            }
+
+            .output-words{
+              width: 80%;
+              margin-left: 10px;
+              margin-bottom: 20px;
+            }
+
+            .input-number{
+              width: 30%;
+              margin-bottom: 4.5em;
+            }
+
+            .calculator-operation__right {
+                flex-direction: column;
+                flex: 0 0 50%;
+            }
+
+            .calculator-input--checkbox {
+                margin-top: 10px;
+                margin-right: 0;
+            }
+
+            #letter-case{
+            width: 7.5em;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="calculator-box">
+        <div class="calculator-box__main">
+            <div class="calculator-operation">
+                <div class="calculator-operation__left">
+                    <div slot="left">
+                        <div class="app-font calculator-text calculator-text--large">
+                            Enter Words:
+                        </div>
+                    </div>
+                    <div class="calculator-input">
+                        <textarea class="input-words" placeholder="Words"></textarea>
+                    </div>
+                </div>
+                <div class="calculator-operation__right">
+                    <div slot="right">
+                        <button style="margin-bottom:1.8em;" class="calculator-button" onclick="convertToNumbers()">Convert to Numbers</button>
+                        <div class="calculator-input">
+                            <input class="output-number" placeholder="Number" readonly />
+                        </div>
+                        <div class="calculator-input calculator-input--checkbox">
+                            <label for="auto">Auto:</label>
+                            <input type="checkbox" id="auto" name="feature" />
+                        </div>
+                        <div class="calculator-input calculator-input--checkbox">
+                            <label for="comma">Comma:</label>
+                            <input type="checkbox" id="comma" name="feature" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="calculator-box__history"></div>
+    </div>
+
+    <script>
+        function convertToNumbers() {
+    const words = document.querySelector('.input-words').value.trim().toLowerCase();
+    const auto = document.getElementById('auto').checked;
+    const comma = document.getElementById('comma').checked;
+
+    if (words === '') {
+        alert('Please enter words to convert.');
+        return;
+    }
+
+    let number = wordsToNumber(words);
+    if (comma) {
+        number = number.toLocaleString();  // This will format the number with commas
+    }
+
+    document.querySelector('.output-number').value = number;
+}
+
+        function wordsToNumber(words) {
+            const wordsMap = {
+                'zero': 0,
+                'one': 1,
+                'two': 2,
+                'three': 3,
+                'four': 4,
+                'five': 5,
+                'six': 6,
+                'seven': 7,
+                'eight': 8,
+                'nine': 9,
+                'ten': 10,
+                'eleven': 11,
+                'twelve': 12,
+                'thirteen': 13,
+                'fourteen': 14,
+                'fifteen': 15,
+                'sixteen': 16,
+                'seventeen': 17,
+                'eighteen': 18,
+                'nineteen': 19,
+                'twenty': 20,
+                'thirty': 30,
+                'forty': 40,
+                'fifty': 50,
+                'sixty': 60,
+                'seventy': 70,
+                'eighty': 80,
+                'ninety': 90,
+                'hundred': 100,
+                'hundreds': 100,
+                'thousand': 1000,
+                'thousands': 1000,
+                'lack': 100000,
+                'lacks': 100000,
+                'million': 1000000,
+                'millions': 1000000,
+                'billion': 1000000000,
+                'billions': 1000000000,
+            };
+
+            const wordsArray = words.split(' ');
+            let number = 0;
+            let partial = 0;
+
+            for (let word of wordsArray) {
+                const value = wordsMap[word];
+                if (value !== undefined) {
+                    if (value >= 100) {
+                        number += partial * value;
+                        partial = 0;
+                    } else {
+                        partial += value;
+                    }
+                } else if (word === 'and') {
+                    // Handle 'and' in case it's used in the words (e.g., one hundred and twenty)
+                    continue;
+                } else {
+                    // Handle invalid words
+                    return NaN;
+                }
+            }
+
+            return number + partial;
+        }
+        
+        // Call convertToNumbers automatically if needed
+document.querySelector('.input-words').addEventListener('input', function() {
+    if (document.getElementById('auto').checked) {
+        convertToNumbers();
+    }
+});
+    </script>
+</body>
+</html>
